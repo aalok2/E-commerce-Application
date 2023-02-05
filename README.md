@@ -10,7 +10,9 @@ The application will start on port 8080 , http://localhost:8080 being the baseUr
 You will need to create basic tables mentioned in the models file , to run the application seemlessly 
 
 One important note : After logging in the user will recieve a token in response and has to use the token in making subsequent api requests wherever neccesary 
-Add a header named authorizartion and the value must contain Bearer Token 
+Add a header named authorizartion 
+the value must contain
+Bearer Token 
 This is just for the sake of backend applicaiton testing , when handlind requests through client the client will automatically send otherwise relevant error codes have been passed to the client
 
 Postman Collection : 
