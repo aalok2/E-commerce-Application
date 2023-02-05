@@ -7,7 +7,7 @@ router.get("/list-of-sellers", async (req, res) => {
     // reteiveing all sellers
     await buyerController.getSellerList(req, res);
   } catch (error) {
-    res.status(404).json({ message: "No sellers found" });
+    res.status(400).json({ message: "No sellers found" });
   }
 });
 router.get("/seller-catalog/:seller_id", validateToken, async (req, res) => {
@@ -19,7 +19,7 @@ router.get("/seller-catalog/:seller_id", validateToken, async (req, res) => {
     }
     await buyerController.getSellerById(req, res);
   } catch (error) {
-    res.status(404).json({ message: "No sellers found" });
+    res.status(400).json({ message: "No sellers found" });
   }
 });
 router.post("/create-order/:seller_id", validateToken, async (req, res) => {
@@ -28,11 +28,11 @@ router.post("/create-order/:seller_id", validateToken, async (req, res) => {
     const seller_id = req.params.seller_id;
     const buyers_id = req.body.buyers_id;
     if (!seller_id || !buyers_id) {
-      res.status(401).json({ message: "Send Mandatory Parameters" });
+      res.status(403).json({ message: "Send Mandatory Parameters" });
     }
     await buyerController.createOrder(req, res);
   } catch (error) {
-    res.status(404).json({ message: "Not able to create order" });
+    res.status(400).json({ message: "Not able to create order" });
   }
 });
 module.exports = router;

@@ -3,7 +3,7 @@ const { secret } = require("../config/config.json");
 const validateToken = async (req, res, next) => {
   const bearerHeader = req.headers["authorization"];
   if (!bearerHeader) {
-    return res.status(401).json({ message: "No token provided" });
+    return res.status(404).json({ message: "No token provided" });
   }
 
   const bearer = bearerHeader.split(" ");

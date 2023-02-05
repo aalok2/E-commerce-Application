@@ -7,11 +7,11 @@ router.get("/orders/:seller_id", validateToken, async (req, res) => {
     // reteiveing all sellers
     const seller_id = req.params.seller_id;
     if (!seller_id) {
-      res.status(401).json({ message: "Send Mandatory Parameters" });
+      res.status(403).json({ message: "Send Mandatory Parameters" });
     }
     await sellerController.getOrderList(req, res);
   } catch (error) {
-    res.status(404).json({ message: "No orders found" });
+    res.status(400).json({ message: "No orders found" });
   }
 });
 router.post("/create-catalog/:seller_id", validateToken, async (req, res) => {
@@ -20,11 +20,11 @@ router.post("/create-catalog/:seller_id", validateToken, async (req, res) => {
     const seller_id = req.params.seller_id;
     const productList = req.body.productList;
     if (!seller_id || !productList) {
-      res.status(401).json({ message: "Send Mandatory Parameters" });
+      res.status(403).json({ message: "Send Mandatory Parameters" });
     }
     await sellerController.createCatalog(req, res);
   } catch (error) {
-    res.status(404).json({ message: "Not able to create catalog" });
+    res.status(400).json({ message: "Not able to create catalog" });
   }
 });
 module.exports = router;
