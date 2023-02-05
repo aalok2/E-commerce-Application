@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { userName, password } = req.body;
-    if (!userName && !password) {
+    if (!userName || !password) {
       res.status(403).json({ message: "Mandatory parameters are missing" });
     }
     const token = await authController.loginUser(req, res);
