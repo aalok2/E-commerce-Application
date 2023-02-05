@@ -1,0 +1,15 @@
+{
+  "appConfig": {
+    "port": 8080
+  },
+  "dbConfig": {
+    "host": "localhost",
+    "port": 3306,
+    "username": "root",
+    "password": "sherlock@2001",
+    "dialect": "mysql",
+    "database": "node"
+  },
+  "saltRounds" : 10,
+  "secret" : "randomsecretfortoken"
+}
