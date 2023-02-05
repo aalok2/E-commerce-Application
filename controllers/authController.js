@@ -50,9 +50,8 @@ const loginUser = async (req, res) => {
     }
     const phonenumber = userLoginDetails.phoneNumber;
     const payload = await fetchUserDetails(phonenumber, userType);
-    await tokenGenerationUtils.generateToken(payload);
-    return res.status(200).json({ message: "You have logged in succesfully" });
-    // set this token in redis with one hr expiry
+    const token = await tokenGenerationUtils.generateToken(payload);
+    return res.status(200).json({ message: "You have logged in succesfully" ,"token" :token});
   } catch (error) {
     res.status(500).json({ message: "Error logging in user" });
   }

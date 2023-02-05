@@ -12,7 +12,6 @@ app.use(cors(corOptions));
 app.use(express.json());
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
-//defining routes - can be moved to route.js
 app.use("/api", routes);
 app.get("/health", (req, res) => {
   res.send({ message: "Health stats" });
