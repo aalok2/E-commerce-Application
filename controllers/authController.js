@@ -11,7 +11,7 @@ const registerUser = async (req, res) => {
     if (userDetails) {
       return res
         .status(200)
-        .json({ message: "User already registerd , Please login" });
+        .json({ message: "User already registerd , Please login", success: 0 });
     }
     const passwordHash = await passwordEncryptionUtils.hashPassword(password);
     let newUserData = {
@@ -26,9 +26,12 @@ const registerUser = async (req, res) => {
     return res.status(200).json({
       message:
         "Account created , Please login using  your  username and  password  ",
+      success: 1,
     });
   } catch (error) {
-    return res.status(500).json({ message: "Error registering user" });
+    return res
+      .status(500)
+      .json({ message: "Error registering user", success: 0 });
   }
 };
 const loginUser = async (req, res) => {
@@ -44,14 +47,19 @@ const loginUser = async (req, res) => {
       hash
     );
     if (!verifypassword) {
-      return res
-        .status(200)
-        .json({ message: "Please check the password you have entered" });
+      return res.status(200).json({
+        message: "Please check the password you have entered",
+        success: 0,
+      });
     }
     const phonenumber = userLoginDetails.phoneNumber;
     const payload = await fetchUserDetails(phonenumber, userType);
     const token = await tokenGenerationUtils.generateToken(payload);
-    return res.status(200).json({ message: "You have logged in succesfully" ,"token" :token});
+    return res.status(200).json({
+      message: "You have logged in succesfully",
+      token: token,
+      success: 1,
+    });
   } catch (error) {
     res.status(500).json({ message: "Error logging in user" });
   }
@@ -66,7 +74,9 @@ const checkIfUserExists = async (userName, phoneNumber) => {
     });
     return userDetails;
   } catch (error) {
-    return res.status(500).json({ message: "Error Finding your user" });
+    return res
+      .status(500)
+      .json({ message: "Error Finding your user", success: 0 });
   }
 };
 const fetchUserDetails = async (phoneNumber, userType) => {
@@ -88,7 +98,9 @@ const fetchUserDetails = async (phoneNumber, userType) => {
     }
     return payload;
   } catch (error) {
-    return res.status(500).json({ message: "Error finding the User" });
+    return res
+      .status(500)
+      .json({ message: "Error finding the User", success: 0 });
   }
 };
 const entryBasedOnUserType = async (name, phoneNumber, userType) => {
@@ -104,7 +116,9 @@ const entryBasedOnUserType = async (name, phoneNumber, userType) => {
       await models.Sellers.create(userDetails);
     }
   } catch (error) {
-    return res.status(500).json({ message: "Error Creating the User" });
+    return res
+      .status(500)
+      .json({ message: "Error Creating the User", success: 0 });
   }
 };
 module.exports = {

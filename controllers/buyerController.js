@@ -6,15 +6,17 @@ const getSellerList = async (req, res) => {
       json: true,
       attributes: { exclude: ["createdAt", "updatedAt"] },
     });
-    return res.status(200).json(sellersList);
+    return res.status(200).json({ sellers: sellersList, success: 1 });
   } catch (error) {
-    return res.status(500).json({ message: "Error retrieving Sellers" });
+    return res
+      .status(500)
+      .json({ message: "Error retrieving Sellers", success: 0 });
   }
 };
 const getSellerById = async (req, res) => {
   try {
     const seller_id = req.params.seller_id;
-    const sellerList = await models.Products.findAll({
+    const productList = await models.Products.findAll({
       where: {
         seller_id: seller_id,
         available: 1,
@@ -22,11 +24,16 @@ const getSellerById = async (req, res) => {
       json: true,
       attributes: ["Product_id", "Name", "Price", "seller_id"],
     });
-    if (sellerList.length) return res.status(200).json(sellerList);
+    if (productList.length)
+      return res.status(200).json({ products: productList, success: 1 });
     else
-      return res.status(200).json({ message: "No active products for seller" });
+      return res
+        .status(200)
+        .json({ message: "No active products for seller", success: 1 });
   } catch (error) {
-    return res.status(500).json({ message: "Error retrieving Seller with id" });
+    return res
+      .status(500)
+      .json({ message: "Error retrieving Seller with id", success: 0 });
   }
 };
 const createOrder = async (req, res) => {
@@ -38,11 +45,13 @@ const createOrder = async (req, res) => {
       productList: JSON.stringify(req.body.productList),
     };
     await models.Orders.create(orderData);
-    return res.status(201).json({ message: "Order Created Succesfully" });
+    return res
+      .status(201)
+      .json({ message: "Order Created Succesfully", success: 1 });
   } catch (error) {
     return res
       .status(500)
-      .json({ message: "Error creating order, please try again" });
+      .json({ message: "Error creating order, please try again", success: 0 });
   }
 };
 module.exports = {
